@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vanessa | 成长记录</title>
+  <style>
+    :root {
+      --black: #000000;
+      --near-black: #1d1d1f;
+      --light-gray: #f5f5f7;
+      --white: #ffffff;
+      --apple-blue: #0071e3;
+      --link-blue: #0066cc;
+      --text-secondary: rgba(0, 0, 0, 0.8);
+      --text-tertiary: rgba(0, 0, 0, 0.48);
+      --card-shadow: rgba(0, 0, 0, 0.16) 2px 4px 24px 0px;
+      --nav-glass-bg: rgba(0, 0, 0, 0.8);
+      --warm-gold: #bf8b3c;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      background: var(--black);
+      color: var(--white);
+      line-height: 1.47;
+      letter-spacing: -0.374px;
+    }
+
+    /* Nav */
+    .nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      height: 48px;
+      background: var(--nav-glass-bg);
+      backdrop-filter: saturate(180%) blur(20px);
+      -webkit-backdrop-filter: saturate(180%) blur(20px);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .nav-inner {
+      max-width: 1024px; width: 100%; padding: 0 22px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-logo {
+      font-size: 21px; font-weight: 600; color: var(--white);
+      text-decoration: none; letter-spacing: -0.28px;
+    }
+    .nav-links {
+      display: flex; list-style: none; gap: 24px; flex-wrap: wrap;
+    }
+    .nav-links a {
+      font-size: 12px; font-weight: 400; color: rgba(255,255,255,0.8);
+      text-decoration: none; letter-spacing: -0.12px; transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--white); }
+
+    /* Hero */
+    .hero {
+      min-height: 100vh; display: flex; align-items: center; justify-content: center;
+      background: var(--black); text-align: center; padding: 80px 24px 60px;
+    }
+    .hero-content { max-width: 680px; }
+    .hero-tag {
+      font-size: 14px; font-weight: 600; color: rgba(255,255,255,0.48);
+      letter-spacing: 2px; text-transform: uppercase; margin-bottom: 12px;
+    }
+    .hero-name {
+      font-size: 72px; font-weight: 600; color: var(--white);
+      letter-spacing: -0.28px; line-height: 1.07; margin-bottom: 16px;
+    }
+    .hero-subtitle {
+      font-size: 21px; font-weight: 400; color: rgba(255,255,255,0.64);
+      letter-spacing: 0.231px; line-height: 1.47; margin-bottom: 40px;
+    }
+    .hero-ctas { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+    /* Buttons */
+    .btn-primary {
+      display: inline-block; background: var(--apple-blue); color: var(--white);
+      padding: 10px 20px; border-radius: 8px;
+      font-size: 17px; font-weight: 400; letter-spacing: -0.374px;
+      text-decoration: none; border: 1px solid transparent; transition: background 0.2s;
+    }
+    .btn-primary:hover { background: #0077ed; }
+    .btn-pill {
+      display: inline-block; background: transparent; color: var(--white);
+      padding: 10px 22px; border-radius: 980px;
+      font-size: 17px; font-weight: 400; letter-spacing: -0.374px;
+      text-decoration: none; border: 1px solid rgba(255,255,255,0.4);
+      transition: background 0.2s, color 0.2s;
+    }
+    .btn-pill:hover { background: var(--white); color: var(--black); }
+
+    /* Sections */
+    .section {
+      padding: 100px 24px;
+      text-align: center;
+    }
+    .section-inner { max-width: 1024px; margin: 0 auto; }
+
+    .section-label {
+      font-size: 14px; font-weight: 600; color: rgba(0,0,0,0.48);
+      letter-spacing: 2px; text-transform: uppercase; margin-bottom: 12px;
+    }
+    .section-heading {
+      font-size: 40px; font-weight: 600; letter-spacing: 0;
+      line-height: 1.10; margin-bottom: 16px;
+    }
+    .section-desc {
+      font-size: 17px; font-weight: 400; color: var(--text-secondary);
+      letter-spacing: -0.374px; line-height: 1.47;
+      margin-bottom: 48px; max-width: 560px; margin-left: auto; margin-right: auto;
+    }
+
+    /* Light section */
+    .section-light {
+      background: var(--light-gray); color: var(--near-black);
+    }
+    .section-light .section-label { color: rgba(0,0,0,0.48); }
+    .section-light .section-desc { color: var(--text-secondary); }
+    .section-light .btn-pill { color: var(--apple-blue); border-color: var(--apple-blue); }
+    .section-light .btn-pill:hover { background: var(--apple-blue); color: var(--white); }
+
+    /* Dark section */
+    .section-dark {
+      background: var(--black); color: var(--white);
+    }
+    .section-dark .section-label { color: rgba(255,255,255,0.48); }
+    .section-dark .section-desc { color: rgba(255,255,255,0.64); }
+
+    /* Cards grid */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+      text-align: left;
+    }
+    .card {
+      background: var(--white); border-radius: 8px;
+      overflow: hidden; box-shadow: var(--card-shadow);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .card:hover { transform: translateY(-4px); box-shadow: rgba(0,0,0,0.24) 2px 8px 32px 0px; }
+    .card-image {
+      width: 100%; aspect-ratio: 4/3;
+      background: linear-gradient(135deg, #e8e8ed 0%, #d2d2d7 100%);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 40px; color: rgba(0,0,0,0.12);
+    }
+    .card-info { padding: 20px; }
+    .card-icon { font-size: 28px; margin-bottom: 8px; display: block; }
+    .card-title {
+      font-size: 19px; font-weight: 600; letter-spacing: 0.231px;
+      line-height: 1.19; margin-bottom: 6px;
+    }
+    .card-desc {
+      font-size: 14px; font-weight: 400; color: var(--text-secondary);
+      letter-spacing: -0.224px; line-height: 1.43;
+    }
+
+    /* Dark cards */
+    .section-dark .card {
+      background: rgba(255,255,255,0.06);
+      color: var(--white);
+    }
+    .section-dark .card-image {
+      background: linear-gradient(135deg, #1a1a1d 0%, #2a2a2d 100%);
+      color: rgba(255,255,255,0.08);
+    }
+    .section-dark .card-desc { color: rgba(255,255,255,0.64); }
+
+    /* Tag */
+    .tag {
+      display: inline-block; font-size: 11px; font-weight: 500;
+      padding: 3px 10px; border-radius: 980px; margin-bottom: 10px;
+      letter-spacing: -0.08px;
+    }
+    .tag-sport { background: rgba(0,113,227,0.1); color: var(--apple-blue); }
+    .tag-art { background: rgba(191,139,60,0.1); color: var(--warm-gold); }
+    .tag-volunteer { background: rgba(52,199,89,0.1); color: #34c759; }
+
+    /* Video placeholder */
+    .video-placeholder {
+      width: 100%; aspect-ratio: 16/9;
+      background: linear-gradient(135deg, #1d1d1f 0%, #333 100%);
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      flex-direction: column; gap: 12px;
+      color: rgba(255,255,255,0.24); font-size: 48px;
+      margin-bottom: 16px;
+    }
+    .video-placeholder p {
+      font-size: 14px; color: rgba(255,255,255,0.32);
+      letter-spacing: -0.224px;
+    }
+
+    /* Timeline */
+    .timeline {
+      display: flex; flex-direction: column; gap: 32px;
+      max-width: 640px; margin: 0 auto; text-align: left;
+    }
+    .timeline-item {
+      display: flex; gap: 20px; align-items: flex-start;
+    }
+    .timeline-year {
+      font-size: 28px; font-weight: 600; color: var(--apple-blue);
+      letter-spacing: -0.28px; line-height: 1; min-width: 80px;
+    }
+    .timeline-content h4 {
+      font-size: 19px; font-weight: 600; letter-spacing: 0.231px;
+      line-height: 1.19; margin-bottom: 4px;
+    }
+    .timeline-content p {
+      font-size: 14px; color: var(--text-secondary);
+      letter-spacing: -0.224px; line-height: 1.43;
+    }
+
+    /* Overlap note */
+    .overlap-note {
+      font-size: 13px; font-weight: 400; color: var(--text-tertiary);
+      letter-spacing: -0.12px; margin-top: 4px; font-style: italic;
+    }
+
+    /* Footer */
+    .footer {
+      background: var(--light-gray); color: var(--text-tertiary);
+      padding: 32px 24px; text-align: center;
+      font-size: 12px; font-weight: 400; letter-spacing: -0.12px;
+    }
+    .footer a { color: var(--link-blue); text-decoration: none; }
+
+    /* Animation */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .hero-content { animation: fadeUp 0.8s ease-out; }
+    .card { animation: fadeUp 0.6s ease-out both; }
+    .card:nth-child(1) { animation-delay: 0.05s; }
+    .card:nth-child(2) { animation-delay: 0.1s; }
+    .card:nth-child(3) { animation-delay: 0.15s; }
+    .card:nth-child(4) { animation-delay: 0.2s; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .hero-content, .card { animation: none; }
+    }
+
+    @media (max-width: 834px) {
+      .hero-name { font-size: 48px; }
+      .section-heading { font-size: 32px; }
+      .nav-links { gap: 14px; }
+    }
+    @media (max-width: 480px) {
+      .hero-name { font-size: 36px; }
+      .hero { padding: 60px 16px 40px; }
+      .section { padding: 64px 16px; }
+      .card-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Nav -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="#" class="nav-logo">Vanessa</a>
+      <ul class="nav-links">
+        <li><a href="#sport">运动</a></li>
+        <li><a href="#art">艺术</a></li>
+        <li><a href="#volunteer">公益</a></li>
+        <li><a href="#school">学校</a></li>
+        <li><a href="#family">家庭</a></li>
+        <li><a href="#reading">读书</a></li>
+        <li><a href="#annual">年度</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-content">
+      <p class="hero-tag">Growing Up</p>
+      <h1 class="hero-name">Vanessa</h1>
+      <p class="hero-subtitle">
+        每一步成长都值得被记录。<br>这是 Vanessa 的世界，一个正在绽放的小生命。
+      </p>
+      <div class="hero-ctas">
+        <a href="#sport" class="btn-primary">探索她的世界</a>
+        <a href="#annual" class="btn-pill">年度视频</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sport -->
+  <section class="section section-light" id="sport">
+    <div class="section-inner">
+      <p class="section-label">运动</p>
+      <h2 class="section-heading">活力无限</h2>
+      <p class="section-desc">从攀岩墙到徒步山径，每一次挥汗都是成长的印记。</p>
+      <div class="card-grid">
+        <div class="card">
+          <div class="card-image">🧗</div>
+          <div class="card-info">
+            <span class="tag tag-sport">攀岩</span>
+            <h3 class="card-title">攀岩</h3>
+            <p class="card-desc">力量与策略的结合，在垂直世界中挑战自我。</p>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-image">🩰</div>
+          <div class="card-info">
+            <span class="tag tag-sport">舞蹈·运动</span>
+            <h3 class="card-title">舞蹈</h3>
+            <p class="card-desc">体能训练与身体协调，运动视角下的舞蹈练习。<br><span class="overlap-note">↳ 表演向作品见「艺术」板块</span></p>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-image">🥋</div>
+          <div class="card-info">
+            <span class="tag tag-sport">跆拳道</span>
+            <h3 class="card-title">跆拳道</h3>
+            <p class="card-desc">礼仪、忍耐、克己——武道精神的修行之路。</p>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-image">🥾</div>
+          <div class="card-info">
+            <span class="tag tag-sport">徒步</span>
+            <h3 class="card-title">徒步</h3>
+            <p class="card-desc">用脚步丈量世界，在山野间学会坚持与欣赏。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Art -->
+  <section class="section section-dark" id="art">
+    <div class="section-inner">
+      <p class="section-label">艺术</p>
+      <h2 class="section-heading">美的表达</h2>
+      <p class="section-desc">在音乐与舞蹈中，找到属于自己的声音和节奏。</p>
+      <div class="card-grid">
+        <div class="card">
+          <div class="card-image">💃</div>
+          <div class="card-info">
+            <span class="tag tag-art">舞蹈·表演</span>
+            <h3 class="card-title">舞蹈</h3>
+            <p class="card-desc">舞台上的绽放，用身体讲述故事。<br><span class="overlap-note">↳ 训练日常见「运动」板块</span></p>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-image">🎵</div>
+          <div class="card-info">
+            <span class="tag tag-art">合唱</span>
+            <h3 class="card-title">合唱</h3>
+            <p class="card-desc">在集体的和声中学会聆听，找到自己的声音位置。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Volunteer -->
+  <section class="section section-light" id="volunteer">
+    <div class="section-inner">
+      <p class="section-label">公益</p>
+      <h2 class="section-heading">心中有他人</h2>
+      <p class="section-desc">用小小的力量，温暖大大的世界。</p>
+      <div class="card-grid">
+        <div class="card">
+          <div class="card-image">📚</div>
+          <div class="card-info">
+            <span class="tag tag-volunteer">图书馆</span>
+            <h3 class="card-title">图书馆志愿者</h3>
+            <p class="card-desc">在书海中服务他人，培养责任与秩序感。</p>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-image">📖</div>
+          <div class="card-info">
+            <span class="tag tag-volunteer">读书分享</span>
+            <h3 class="card-title">社区英文公益读书分享</h3>
+            <p class="card-desc">用英文分享阅读的快乐，连接社区里的小读者们。</p>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-image">⭐</div>
+          <div class="card-info">
+            <span class="tag tag-volunteer">支教</span>
+            <h3 class="card-title">星星之火支教</h3>
+            <p class="card-desc">暑期支教项目——点点星光，也能照亮远方。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- School -->
+  <section class="section section-dark" id="school">
+    <div class="section-inner">
+      <p class="section-label">学校作品</p>
+      <h2 class="section-heading">学海拾贝</h2>
+      <p class="section-desc">课堂内外的探索、创作与发现。</p>
+      <div class="card-grid">
+        <div class="card">
+          <div class="card-image">✏️</div>
+          <div class="card-info">
+            <h3 class="card-title">作文 & 写作</h3>
+            <p class="card-desc">从拼音到段落，笔尖下的成长轨迹。</p>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-image">🎨</div>
+          <div class="card-info">
+            <h3 class="card-title">美术 & 手工</h3>
+            <p class="card-desc">色彩与材料中的想象力。</p>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-image">🔬</div>
+          <div class="card-info">
+            <h3 class="card-title">科学 & 项目</h3>
+            <p class="card-desc">好奇心驱动的小实验和大发现。</p>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-image">🏆</div>
+          <div class="card-info">
+            <h3 class="card-title">奖状 & 荣誉</h3>
+            <p class="card-desc">每一个肯定，都是前进的动力。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Family -->
+  <section class="section section-light" id="family">
+    <div class="section-inner">
+      <p class="section-label">家庭时光</p>
+      <h2 class="section-heading">温暖瞬间</h2>
+      <p class="section-desc">一家人在一起的每个平凡时刻，都是最珍贵的记忆。</p>
+      <div class="card-grid">
+        <div class="card">
+          <div class="card-image">🌿</div>
+          <div class="card-info">
+            <h3 class="card-title">旅行 & 出游</h3>
+            <p class="card-desc">一起看过的风景，走过的路。</p>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-image">🎂</div>
+          <div class="card-info">
+            <h3 class="card-title">生日 & 节日</h3>
+            <p class="card-desc">每一个值得庆祝的日子。</p>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-image">🏠</div>
+          <div class="card-info">
+            <h3 class="card-title">日常碎片</h3>
+            <p class="card-desc">那些不经意的笑容和拥抱。</p>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-image">🐾</div>
+          <div class="card-info">
+            <h3 class="card-title">宠物 & 伙伴</h3>
+            <p class="card-desc">毛茸茸的家庭成员们。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Reading -->
+  <section class="section section-dark" id="reading">
+    <div class="section-inner">
+      <p class="section-label">读书笔记</p>
+      <h2 class="section-heading">书海漫游</h2>
+      <p class="section-desc">每本书都是一扇新世界的门。</p>
+      <div class="card-grid">
+        <div class="card">
+          <div class="card-image">📕</div>
+          <div class="card-info">
+            <h3 class="card-title">中文阅读</h3>
+            <p class="card-desc">从童话到小说，在母语中自由翱翔。</p>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-image">📗</div>
+          <div class="card-info">
+            <h3 class="card-title">英文阅读</h3>
+            <p class="card-desc">用另一种语言打开新的故事。</p>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-image">📝</div>
+          <div class="card-info">
+            <h3 class="card-title">读后感</h3>
+            <p class="card-desc">读完之后的思考与感悟。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Annual Video -->
+  <section class="section section-light" id="annual">
+    <div class="section-inner">
+      <p class="section-label">年度视频</p>
+      <h2 class="section-heading">每年一个自我介绍</h2>
+      <p class="section-desc">用视频记录每一年的自己——声音、样子、和想说的话。</p>
+
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-year">2026</div>
+          <div class="timeline-content">
+            <div class="video-placeholder">
+              <span>🎬</span>
+              <p>即将录制 · 2026 年度自我介绍</p>
+            </div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-year">2025</div>
+          <div class="timeline-content">
+            <div class="video-placeholder">
+              <span>🎬</span>
+              <p>待上传</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <p style="margin-top: 40px; font-size: 14px; color: var(--text-tertiary); letter-spacing: -0.224px;">
+        每年录制一段视频，记录 Vanessa 的自我介绍——<br>这是送给未来的她最好的礼物。
+      </p>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>With love, for Vanessa ♥</p>
+    <p style="margin-top: 4px;">© 2026 · <a href="https://xiaomei-bolt.github.io/xiaomei-portfolio/">小美的作品集</a></p>
+  </footer>
+
+</body>
+</html>
