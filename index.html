@@ -301,6 +301,16 @@
       text-decoration: line-through; opacity: 0.5;
     }
     .book-check:checked ~ .book-info .book-desc { opacity: 0.35; }
+    .book-note {
+      width: 100%; margin-top: 8px; padding: 8px 10px;
+      background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 6px; color: rgba(255,255,255,0.7);
+      font-family: inherit; font-size: 12px; line-height: 1.5;
+      resize: vertical; outline: none;
+      transition: border-color 0.2s;
+    }
+    .book-note:focus { border-color: rgba(255,255,255,0.25); }
+    .book-check:checked ~ .book-info .book-note { opacity: 0.4; }
 
     .reflection-area {
       margin-top: 48px; padding-top: 32px;
@@ -594,6 +604,7 @@
               <div class="book-info">
                 <div class="book-title">十二生肖童话</div>
                 <div class="book-desc">十二个生肖动物，十二个奇妙故事。用童话的方式讲述中国传统文化中的生肖智慧，每个动物都有自己的性格与冒险。</div>
+                <textarea class="book-note" rows="2" placeholder="💬 读完的感想..."></textarea>
               </div>
             </div>
 
@@ -602,6 +613,7 @@
               <div class="book-info">
                 <div class="book-title">我是世界的孩子</div>
                 <div class="book-desc">从非洲草原到北极冰原，从亚马逊雨林到喜马拉雅山麓——跟随世界各地孩子的眼睛，看见不同文化中的童年模样。</div>
+                <textarea class="book-note" rows="2" placeholder="💬 读完的感想..."></textarea>
               </div>
             </div>
 
@@ -610,6 +622,7 @@
               <div class="book-info">
                 <div class="book-title">在阿尼玛卿脚下</div>
                 <div class="book-desc">青藏高原上，阿尼玛卿雪山下，一个藏族少年的成长故事。关于信仰、勇气和人与自然最朴素的情感连接。</div>
+                <textarea class="book-note" rows="2" placeholder="💬 读完的感想..."></textarea>
               </div>
             </div>
 
@@ -618,6 +631,7 @@
               <div class="book-info">
                 <div class="book-title">柳林风声</div>
                 <div class="book-desc">英国儿童文学经典。鼹鼠、河鼠、獾和蟾蜍在泰晤士河畔的冒险，一曲关于友谊与家园的田园牧歌。</div>
+                <textarea class="book-note" rows="2" placeholder="💬 读完的感想..."></textarea>
               </div>
             </div>
 
@@ -626,6 +640,7 @@
               <div class="book-info">
                 <div class="book-title">我的朋友巴菲猫</div>
                 <div class="book-desc">一只名叫巴菲的猫，一个关于陪伴、理解与日常温暖的故事。在平凡的日子里，发现不平凡的情感。</div>
+                <textarea class="book-note" rows="2" placeholder="💬 读完的感想..."></textarea>
               </div>
             </div>
 
@@ -634,6 +649,7 @@
               <div class="book-info">
                 <div class="book-title">The Boy at the Back of the Class</div>
                 <div class="book-desc">教室后排空椅子上，来了一个新同学——一个来自远方的难民男孩。关于善意如何跨越语言与国界，温暖而有力。</div>
+                <textarea class="book-note" rows="2" placeholder="💬 读完的感想..."></textarea>
               </div>
             </div>
 
@@ -649,6 +665,7 @@
               <div class="book-info">
                 <div class="book-title">毛毛</div>
                 <div class="book-desc">米切尔·恩德的幻想杰作。一个不知年龄的小女孩，对抗一群偷走人类时间的"灰先生"。关于时间的真谛与倾听的力量。</div>
+                <textarea class="book-note" rows="2" placeholder="💬 读完的感想..."></textarea>
               </div>
             </div>
 
@@ -657,6 +674,7 @@
               <div class="book-info">
                 <div class="book-title">我的朋友巴菲猫</div>
                 <div class="book-desc">和妈妈共读的一本书。一只猫带来的温暖日常，读完可以一起聊聊：你心中的巴菲是什么样的？</div>
+                <textarea class="book-note" rows="2" placeholder="💬 读完的感想..."></textarea>
               </div>
             </div>
 
@@ -665,6 +683,7 @@
               <div class="book-info">
                 <div class="book-title">我是世界的孩子</div>
                 <div class="book-desc">和妈妈共读。地球上不同角落的孩子，过着截然不同却又同样精彩的童年——认识世界，也认识自己。</div>
+                <textarea class="book-note" rows="2" placeholder="💬 读完的感想..."></textarea>
               </div>
             </div>
 
@@ -673,6 +692,7 @@
               <div class="book-info">
                 <div class="book-title">十二生肖童话</div>
                 <div class="book-desc">和妈妈共读。用童话认识自己的生肖，也认识每个生肖背后的文化密码。</div>
+                <textarea class="book-note" rows="2" placeholder="💬 读完的感想..."></textarea>
               </div>
             </div>
 
@@ -681,6 +701,7 @@
               <div class="book-info">
                 <div class="book-title">The House on Mango Street</div>
                 <div class="book-desc">芒果街上的小屋，一个拉丁裔女孩的成长诗篇。用碎片般的短章，写出关于家、身份和梦想的全部。</div>
+                <textarea class="book-note" rows="2" placeholder="💬 读完的感想..."></textarea>
               </div>
             </div>
 
@@ -689,6 +710,7 @@
               <div class="book-info">
                 <div class="book-title">Number the Stars</div>
                 <div class="book-desc">二战时期的丹麦，一个 10 岁女孩帮助犹太朋友逃往瑞典。纽伯瑞金奖作品，关于勇气最安静也最动人的诠释。</div>
+                <textarea class="book-note" rows="2" placeholder="💬 读完的感想..."></textarea>
               </div>
             </div>
 
@@ -697,6 +719,7 @@
               <div class="book-info">
                 <div class="book-title">The Alchemist</div>
                 <div class="book-desc">牧羊少年圣地亚哥穿越沙漠寻找宝藏的旅程。一个关于追随内心、相信"天命"的寓言——当你真心渴望某样东西时，整个宇宙都会联合起来帮助你。</div>
+                <textarea class="book-note" rows="2" placeholder="💬 读完的感想..."></textarea>
               </div>
             </div>
 
@@ -705,6 +728,7 @@
               <div class="book-info">
                 <div class="book-title">绿野仙踪</div>
                 <div class="book-desc">被龙卷风带到奥兹国的多萝西，在寻找回家之路的旅途中遇见了稻草人、铁皮人和胆小狮。经典童话，关于勇气、智慧与心的寓言。</div>
+                <textarea class="book-note" rows="2" placeholder="💬 读完的感想..."></textarea>
               </div>
             </div>
 
@@ -713,6 +737,7 @@
               <div class="book-info">
                 <div class="book-title">赛雷三分钟漫画中国史</div>
                 <div class="book-desc">用爆笑漫画三分钟讲透一段中国历史。从夏商周到明清，严肃的历史被画成了停不下来的故事。</div>
+                <textarea class="book-note" rows="2" placeholder="💬 读完的感想..."></textarea>
               </div>
             </div>
 
@@ -737,14 +762,27 @@
   </footer>
 
 <script>
-// Book checkboxes — persist to localStorage
-document.querySelectorAll('.book-check').forEach(cb => {
+// Book checkboxes + notes — persist to localStorage
+document.querySelectorAll('.book-item').forEach(item => {
+  var cb = item.querySelector('.book-check');
+  var note = item.querySelector('.book-note');
   var key = 'reading-' + cb.dataset.book;
+  
+  // Checkbox
   cb.checked = localStorage.getItem(key) === 'true';
   cb.addEventListener('change', function() {
     localStorage.setItem(key, this.checked);
     updateStats();
   });
+  
+  // Note
+  if (note) {
+    var noteKey = key + '-note';
+    note.value = localStorage.getItem(noteKey) || '';
+    note.addEventListener('input', function() {
+      localStorage.setItem(noteKey, this.value);
+    });
+  }
 });
 
 // Reflection textarea — auto-save
