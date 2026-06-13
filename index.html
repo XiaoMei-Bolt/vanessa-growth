@@ -260,6 +260,69 @@
       .section { padding: 64px 16px; }
       .card-grid { grid-template-columns: 1fr; }
     }
+
+    /* Reading List */
+    .reading-page { text-align: left; max-width: 780px; margin: 0 auto; }
+    .reading-columns { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+    @media (max-width: 600px) { .reading-columns { grid-template-columns: 1fr; } }
+    .reading-col h3 {
+      font-size: 22px; font-weight: 600; margin-bottom: 20px;
+      padding-bottom: 10px; border-bottom: 2px solid rgba(255,255,255,0.12);
+    }
+    .book-item {
+      display: flex; gap: 12px; align-items: flex-start;
+      padding: 14px 0; border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .book-check {
+      appearance: none; -webkit-appearance: none;
+      width: 22px; height: 22px; min-width: 22px; margin-top: 3px;
+      border: 2px solid rgba(255,255,255,0.3); border-radius: 5px;
+      background: transparent; cursor: pointer;
+      transition: background 0.2s, border-color 0.2s;
+      position: relative;
+    }
+    .book-check:checked {
+      background: #34c759; border-color: #34c759;
+    }
+    .book-check:checked::after {
+      content: "✓"; position: absolute; top: -1px; left: 4px;
+      color: #fff; font-size: 14px; font-weight: 700;
+    }
+    .book-info { flex: 1; }
+    .book-title {
+      font-size: 16px; font-weight: 600; letter-spacing: -0.16px;
+      margin-bottom: 3px;
+    }
+    .book-desc {
+      font-size: 13px; color: rgba(255,255,255,0.48);
+      letter-spacing: -0.12px; line-height: 1.5;
+    }
+    .book-check:checked ~ .book-info .book-title {
+      text-decoration: line-through; opacity: 0.5;
+    }
+    .book-check:checked ~ .book-info .book-desc { opacity: 0.35; }
+
+    .reflection-area {
+      margin-top: 48px; padding-top: 32px;
+      border-top: 1px solid rgba(255,255,255,0.12);
+    }
+    .reflection-area h3 {
+      font-size: 20px; font-weight: 600; margin-bottom: 16px;
+    }
+    .reflection-area textarea {
+      width: 100%; min-height: 140px; padding: 16px;
+      background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 10px; color: var(--white);
+      font-family: inherit; font-size: 15px; line-height: 1.7;
+      resize: vertical; outline: none;
+      transition: border-color 0.2s;
+    }
+    .reflection-area textarea:focus {
+      border-color: rgba(255,255,255,0.32);
+    }
+    .reading-stats {
+      margin-top: 16px; font-size: 13px; color: rgba(255,255,255,0.4);
+    }
   </style>
 </head>
 <body>
@@ -516,29 +579,152 @@
   <section class="section section-dark" id="reading">
     <div class="section-inner">
       <p class="section-label">读书笔记</p>
-      <h2 class="section-heading">书海漫游</h2>
-      <p class="section-desc">每本书都是一扇新世界的门。</p>
-      <div class="card-grid">
-        <div class="card">
-          <div class="card-image">📕</div>
-          <div class="card-info">
-            <h3 class="card-title">中文阅读</h3>
-            <p class="card-desc">从童话到小说，在母语中自由翱翔。</p>
+      <h2 class="section-heading">2026 年暑假阅读计划</h2>
+      <p class="section-desc">这个夏天，和果果一起读书。妈妈有妈妈的书单，果果有果果的书单——各自探索，彼此分享。</p>
+
+      <div class="reading-page">
+        <div class="reading-columns">
+
+          <!-- 妈妈的书单 -->
+          <div class="reading-col" id="col-mom">
+            <h3>👩 妈妈的书单</h3>
+
+            <div class="book-item">
+              <input type="checkbox" class="book-check" data-book="mom-1">
+              <div class="book-info">
+                <div class="book-title">十二生肖童话</div>
+                <div class="book-desc">十二个生肖动物，十二个奇妙故事。用童话的方式讲述中国传统文化中的生肖智慧，每个动物都有自己的性格与冒险。</div>
+              </div>
+            </div>
+
+            <div class="book-item">
+              <input type="checkbox" class="book-check" data-book="mom-2">
+              <div class="book-info">
+                <div class="book-title">我是世界的孩子</div>
+                <div class="book-desc">从非洲草原到北极冰原，从亚马逊雨林到喜马拉雅山麓——跟随世界各地孩子的眼睛，看见不同文化中的童年模样。</div>
+              </div>
+            </div>
+
+            <div class="book-item">
+              <input type="checkbox" class="book-check" data-book="mom-3">
+              <div class="book-info">
+                <div class="book-title">在阿尼玛卿脚下</div>
+                <div class="book-desc">青藏高原上，阿尼玛卿雪山下，一个藏族少年的成长故事。关于信仰、勇气和人与自然最朴素的情感连接。</div>
+              </div>
+            </div>
+
+            <div class="book-item">
+              <input type="checkbox" class="book-check" data-book="mom-4">
+              <div class="book-info">
+                <div class="book-title">柳林风声</div>
+                <div class="book-desc">英国儿童文学经典。鼹鼠、河鼠、獾和蟾蜍在泰晤士河畔的冒险，一曲关于友谊与家园的田园牧歌。</div>
+              </div>
+            </div>
+
+            <div class="book-item">
+              <input type="checkbox" class="book-check" data-book="mom-5">
+              <div class="book-info">
+                <div class="book-title">我的朋友巴菲猫</div>
+                <div class="book-desc">一只名叫巴菲的猫，一个关于陪伴、理解与日常温暖的故事。在平凡的日子里，发现不平凡的情感。</div>
+              </div>
+            </div>
+
+            <div class="book-item">
+              <input type="checkbox" class="book-check" data-book="mom-6">
+              <div class="book-info">
+                <div class="book-title">The Boy at the Back of the Class</div>
+                <div class="book-desc">教室后排空椅子上，来了一个新同学——一个来自远方的难民男孩。关于善意如何跨越语言与国界，温暖而有力。</div>
+              </div>
+            </div>
+
+            <p class="reading-stats" id="stats-mom">已读完 0/6 本</p>
           </div>
+
+          <!-- 果果的书单 -->
+          <div class="reading-col" id="col-guo">
+            <h3>👧 果果的书单</h3>
+
+            <div class="book-item">
+              <input type="checkbox" class="book-check" data-book="guo-1">
+              <div class="book-info">
+                <div class="book-title">毛毛</div>
+                <div class="book-desc">米切尔·恩德的幻想杰作。一个不知年龄的小女孩，对抗一群偷走人类时间的"灰先生"。关于时间的真谛与倾听的力量。</div>
+              </div>
+            </div>
+
+            <div class="book-item">
+              <input type="checkbox" class="book-check" data-book="guo-2">
+              <div class="book-info">
+                <div class="book-title">我的朋友巴菲猫</div>
+                <div class="book-desc">和妈妈共读的一本书。一只猫带来的温暖日常，读完可以一起聊聊：你心中的巴菲是什么样的？</div>
+              </div>
+            </div>
+
+            <div class="book-item">
+              <input type="checkbox" class="book-check" data-book="guo-3">
+              <div class="book-info">
+                <div class="book-title">我是世界的孩子</div>
+                <div class="book-desc">和妈妈共读。地球上不同角落的孩子，过着截然不同却又同样精彩的童年——认识世界，也认识自己。</div>
+              </div>
+            </div>
+
+            <div class="book-item">
+              <input type="checkbox" class="book-check" data-book="guo-4">
+              <div class="book-info">
+                <div class="book-title">十二生肖童话</div>
+                <div class="book-desc">和妈妈共读。用童话认识自己的生肖，也认识每个生肖背后的文化密码。</div>
+              </div>
+            </div>
+
+            <div class="book-item">
+              <input type="checkbox" class="book-check" data-book="guo-5">
+              <div class="book-info">
+                <div class="book-title">The House on Mango Street</div>
+                <div class="book-desc">芒果街上的小屋，一个拉丁裔女孩的成长诗篇。用碎片般的短章，写出关于家、身份和梦想的全部。</div>
+              </div>
+            </div>
+
+            <div class="book-item">
+              <input type="checkbox" class="book-check" data-book="guo-6">
+              <div class="book-info">
+                <div class="book-title">Number the Stars</div>
+                <div class="book-desc">二战时期的丹麦，一个 10 岁女孩帮助犹太朋友逃往瑞典。纽伯瑞金奖作品，关于勇气最安静也最动人的诠释。</div>
+              </div>
+            </div>
+
+            <div class="book-item">
+              <input type="checkbox" class="book-check" data-book="guo-7">
+              <div class="book-info">
+                <div class="book-title">The Alchemist</div>
+                <div class="book-desc">牧羊少年圣地亚哥穿越沙漠寻找宝藏的旅程。一个关于追随内心、相信"天命"的寓言——当你真心渴望某样东西时，整个宇宙都会联合起来帮助你。</div>
+              </div>
+            </div>
+
+            <div class="book-item">
+              <input type="checkbox" class="book-check" data-book="guo-8">
+              <div class="book-info">
+                <div class="book-title">绿野仙踪</div>
+                <div class="book-desc">被龙卷风带到奥兹国的多萝西，在寻找回家之路的旅途中遇见了稻草人、铁皮人和胆小狮。经典童话，关于勇气、智慧与心的寓言。</div>
+              </div>
+            </div>
+
+            <div class="book-item">
+              <input type="checkbox" class="book-check" data-book="guo-9">
+              <div class="book-info">
+                <div class="book-title">赛雷三分钟漫画中国史</div>
+                <div class="book-desc">用爆笑漫画三分钟讲透一段中国历史。从夏商周到明清，严肃的历史被画成了停不下来的故事。</div>
+              </div>
+            </div>
+
+            <p class="reading-stats" id="stats-guo">已读完 0/9 本</p>
+          </div>
+
         </div>
-        <div class="card">
-          <div class="card-image">📗</div>
-          <div class="card-info">
-            <h3 class="card-title">英文阅读</h3>
-            <p class="card-desc">用另一种语言打开新的故事。</p>
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-image">📝</div>
-          <div class="card-info">
-            <h3 class="card-title">读后感</h3>
-            <p class="card-desc">读完之后的思考与感悟。</p>
-          </div>
+
+        <!-- 读后感 -->
+        <div class="reflection-area">
+          <h3>✏️ 读后感</h3>
+          <textarea id="reflection" placeholder="读完一本书，写下你的想法……可以是果果说的，也可以是妈妈记的。"></textarea>
         </div>
       </div>
     </div>
@@ -549,6 +735,38 @@
     <p>With love, for Vanessa ♥</p>
     <p style="margin-top: 4px;">© 2026 · <a href="https://xiaomei-bolt.github.io/xiaomei-portfolio/">小美的作品集</a></p>
   </footer>
+
+<script>
+// Book checkboxes — persist to localStorage
+document.querySelectorAll('.book-check').forEach(cb => {
+  var key = 'reading-' + cb.dataset.book;
+  cb.checked = localStorage.getItem(key) === 'true';
+  cb.addEventListener('change', function() {
+    localStorage.setItem(key, this.checked);
+    updateStats();
+  });
+});
+
+// Reflection textarea — auto-save
+var ta = document.getElementById('reflection');
+if (ta) {
+  ta.value = localStorage.getItem('reading-reflection') || '';
+  ta.addEventListener('input', function() {
+    localStorage.setItem('reading-reflection', this.value);
+  });
+}
+
+// Update reading stats
+function updateStats() {
+  ['mom','guo'].forEach(function(col) {
+    var total = document.querySelectorAll('#col-' + col + ' .book-check').length;
+    var done  = document.querySelectorAll('#col-' + col + ' .book-check:checked').length;
+    var el = document.getElementById('stats-' + col);
+    if (el) el.textContent = '已读完 ' + done + '/' + total + ' 本' + (done === total ? ' 🎉' : '');
+  });
+}
+updateStats();
+</script>
 
 </body>
 </html>
