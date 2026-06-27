@@ -1101,67 +1101,45 @@ function updateStats() {
   });
 }
 // ===== PPT Slide System =====
-function initPPT(container) {
-  var c = typeof container === 'string' ? document.getElementById(container) : container;
-  if (!c || c._inited) return;
+function goSlide(containerId, delta) {
+  var c = document.getElementById(containerId);
+  if (!c) return;
   var track = c.querySelector('.ppt-track');
-  var dots  = c.querySelector('.ppt-dots');
-  if (!track || !dots) return;
-  var slides = track.querySelectorAll('.ppt-slide');
-  var total  = slides.length;
-  if (total === 0) return;
-  // Ensure parent has width
+  var dots  = c.querySelectorAll('.ppt-dot');
+  var slides = track ? track.querySelectorAll('.ppt-slide') : [];
+  if (!slides.length) return;
+  // Get or init current index
+  if (typeof c._idx === 'undefined') c._idx = 0;
+  var idx = c._idx + delta;
+  if (idx < 0 || idx >= slides.length) return;
+  c._idx = idx;
+  // Get actual width
   var vp = c.querySelector('.ppt-viewport');
-  var w = vp ? vp.offsetWidth : 700;
-  if (w < 50) { setTimeout(function(){ initPPT(c); }, 300); return; }
-  // Set explicit slide widths
-  slides.forEach(function(s) { s.style.minWidth = w + 'px'; });
-  // Clear old dots
-  dots.innerHTML = '';
-  for (var i = 0; i < total; i++) {
+  var w = vp ? vp.offsetWidth : slides[0].offsetWidth;
+  if (w < 50) w = 700;
+  track.style.transform = 'translateX(-' + (idx * w) + 'px)';
+  // Update dots
+  dots.forEach(function(d, i) { d.classList.toggle('active', i === idx); });
+}
+// Create dots on load
+(function(){
+  var c = document.getElementById('ppt-teach2');
+  if (!c) return;
+  var dotsDiv = document.getElementById('pptDots2');
+  if (!dotsDiv) return;
+  var track = c.querySelector('.ppt-track');
+  if (!track) return;
+  var slides = track.querySelectorAll('.ppt-slide');
+  for (var i = 0; i < slides.length; i++) {
     var d = document.createElement('span');
     d.className = 'ppt-dot' + (i === 0 ? ' active' : '');
-    d.setAttribute('data-i', i);
-    (function(j){ d.onclick = function(e){ e.stopPropagation(); goSlide(c, j - c._idx); }; })(i);
-    dots.appendChild(d);
+    (function(j){
+      d.onclick = function(e){ e.stopPropagation(); goSlide('ppt-teach2', j - c._idx); };
+    })(i);
+    dotsDiv.appendChild(d);
   }
-  c._idx = 0; c._track = track; c._w = w;
-  c._dots = dots.querySelectorAll('.ppt-dot'); c._total = total;
-  c._inited = true;
-  c._track.style.transform = 'translateX(0px)';
-  var startX = 0;
-  track.addEventListener('touchstart', function(e) { startX = e.touches[0].clientX; });
-  track.addEventListener('touchend', function(e) {
-    var diff = startX - e.changedTouches[0].clientX;
-    if (Math.abs(diff) > 50) goSlide(c.id, diff > 0 ? 1 : -1);
-  });
-}
-function goSlide(container, delta) {
-  var c = typeof container === 'string' ? document.getElementById(container) : container;
-  if (!c || !c._track || !c._w) return;
-  var idx = c._idx + delta;
-  if (idx < 0 || idx >= c._total) return;
-  c._idx = idx;
-  c._track.style.transform = 'translateX(-' + (idx * c._w) + 'px)';
-  if (c._dots) c._dots.forEach(function(d, i) { d.classList.toggle('active', i === idx); });
-}
-// Init all PPT containers on load (retry if hidden)
-(function retryInit() {
-  var containers = document.querySelectorAll('.ppt-container');
-  containers.forEach(function(c) { initPPT(c); });
-  // Retry after a short delay for panels that expand
-  var anyUninit = false;
-  containers.forEach(function(c) { if (!c._inited) anyUninit = true; });
-  if (anyUninit) setTimeout(retryInit, 500);
+  c._idx = 0;
 })();
-// Also init when any who-panel is opened
-document.querySelectorAll('.who-panel').forEach(function(p) {
-  p.addEventListener('click', function() {
-    setTimeout(function() {
-      p.querySelectorAll('.ppt-container').forEach(function(c) { initPPT(c); });
-    }, 400);
-  });
-});
 updateStats();
 </script>
 
