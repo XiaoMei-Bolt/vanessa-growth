@@ -1110,20 +1110,25 @@ function initPPT(container) {
   var slides = track.querySelectorAll('.ppt-slide');
   var total  = slides.length;
   if (total === 0) return;
+  // Ensure parent has width
+  var vp = c.querySelector('.ppt-viewport');
+  var w = vp ? vp.offsetWidth : 700;
+  if (w < 50) { setTimeout(function(){ initPPT(c); }, 300); return; }
+  // Set explicit slide widths
+  slides.forEach(function(s) { s.style.minWidth = w + 'px'; });
   // Clear old dots
   dots.innerHTML = '';
   for (var i = 0; i < total; i++) {
     var d = document.createElement('span');
     d.className = 'ppt-dot' + (i === 0 ? ' active' : '');
     d.setAttribute('data-i', i);
-    (function(j){ d.onclick = function(){ goSlide(c.id, j - c._idx); }; })(i);
+    (function(j){ d.onclick = function(e){ e.stopPropagation(); goSlide(c, j - c._idx); }; })(i);
     dots.appendChild(d);
   }
-  c._idx = 0; c._track = track;
+  c._idx = 0; c._track = track; c._w = w;
   c._dots = dots.querySelectorAll('.ppt-dot'); c._total = total;
   c._inited = true;
-  c._track.style.transform = 'translateX(0%)';
-  // Touch support
+  c._track.style.transform = 'translateX(0px)';
   var startX = 0;
   track.addEventListener('touchstart', function(e) { startX = e.touches[0].clientX; });
   track.addEventListener('touchend', function(e) {
@@ -1131,14 +1136,14 @@ function initPPT(container) {
     if (Math.abs(diff) > 50) goSlide(c.id, diff > 0 ? 1 : -1);
   });
 }
-function goSlide(containerId, delta) {
-  var c = document.getElementById(containerId);
-  if (!c || !c._track) return;
+function goSlide(container, delta) {
+  var c = typeof container === 'string' ? document.getElementById(container) : container;
+  if (!c || !c._track || !c._w) return;
   var idx = c._idx + delta;
   if (idx < 0 || idx >= c._total) return;
   c._idx = idx;
-  c._track.style.transform = 'translateX(-' + (idx * 100) + '%)';
-  c._dots.forEach(function(d, i) { d.classList.toggle('active', i === idx); });
+  c._track.style.transform = 'translateX(-' + (idx * c._w) + 'px)';
+  if (c._dots) c._dots.forEach(function(d, i) { d.classList.toggle('active', i === idx); });
 }
 // Init all PPT containers on load (retry if hidden)
 (function retryInit() {
