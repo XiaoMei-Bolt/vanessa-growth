@@ -263,10 +263,10 @@
 
     /* ===== PPT Slide System ===== */
     .ppt-container { position:relative; }
-    .ppt-viewport { overflow:hidden; border-radius:12px; }
+    .ppt-viewport { overflow:hidden; border-radius:12px; background:#fff; }
     .ppt-track { display:flex; transition:transform 0.4s cubic-bezier(0.25,0.46,0.45,0.94); }
-    .ppt-slide { min-width:100%; }
-    .ppt-inner { padding:20px 24px 16px; min-height:340px; position:relative; }
+    .ppt-slide { min-width:100%; background:#fff; }
+    .ppt-inner { padding:20px 24px 16px; min-height:340px; position:relative; color:#333; }
     .ppt-cover { text-align:center; display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:380px; background:linear-gradient(180deg,rgba(255,255,255,0) 0%,rgba(76,175,80,0.08) 100%); }
     .ppt-emoji-hero { font-size:64px; margin-bottom:8px; animation:pptBounce 0.6s ease-out; }
     @keyframes pptBounce { 0%{transform:scale(0.3);opacity:0} 60%{transform:scale(1.1)} 100%{transform:scale(1);opacity:1} }
@@ -1101,31 +1101,36 @@ function updateStats() {
   });
 }
 // ===== PPT Slide System =====
-(function() {
-  var containers = document.querySelectorAll('.ppt-container');
-  containers.forEach(function(c) {
-    var track = c.querySelector('.ppt-track');
-    var dots  = c.querySelector('.ppt-dots');
-    var slides = track.querySelectorAll('.ppt-slide');
-    var total  = slides.length;
-    var index  = 0;
-    for (var i = 0; i < total; i++) {
-      var d = document.createElement('span');
-      d.className = 'ppt-dot' + (i === 0 ? ' active' : '');
-      d.setAttribute('data-i', i);
-      d.onclick = (function(j) { return function() { goSlide(c.id, j - index); }; })(i);
-      dots.appendChild(d);
-    }
-    c._idx = 0; c._track = track;
-    c._dots = dots.querySelectorAll('.ppt-dot'); c._total = total;
-    var startX = 0;
-    track.addEventListener('touchstart', function(e) { startX = e.touches[0].clientX; });
-    track.addEventListener('touchend', function(e) {
-      var diff = startX - e.changedTouches[0].clientX;
-      if (Math.abs(diff) > 50) goSlide(c.id, diff > 0 ? 1 : -1);
-    });
+function initPPT(container) {
+  var c = typeof container === 'string' ? document.getElementById(container) : container;
+  if (!c || c._inited) return;
+  var track = c.querySelector('.ppt-track');
+  var dots  = c.querySelector('.ppt-dots');
+  if (!track || !dots) return;
+  var slides = track.querySelectorAll('.ppt-slide');
+  var total  = slides.length;
+  if (total === 0) return;
+  // Clear old dots
+  dots.innerHTML = '';
+  for (var i = 0; i < total; i++) {
+    var d = document.createElement('span');
+    d.className = 'ppt-dot' + (i === 0 ? ' active' : '');
+    d.setAttribute('data-i', i);
+    (function(j){ d.onclick = function(){ goSlide(c.id, j - c._idx); }; })(i);
+    dots.appendChild(d);
+  }
+  c._idx = 0; c._track = track;
+  c._dots = dots.querySelectorAll('.ppt-dot'); c._total = total;
+  c._inited = true;
+  c._track.style.transform = 'translateX(0%)';
+  // Touch support
+  var startX = 0;
+  track.addEventListener('touchstart', function(e) { startX = e.touches[0].clientX; });
+  track.addEventListener('touchend', function(e) {
+    var diff = startX - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 50) goSlide(c.id, diff > 0 ? 1 : -1);
   });
-})();
+}
 function goSlide(containerId, delta) {
   var c = document.getElementById(containerId);
   if (!c || !c._track) return;
@@ -1135,6 +1140,23 @@ function goSlide(containerId, delta) {
   c._track.style.transform = 'translateX(-' + (idx * 100) + '%)';
   c._dots.forEach(function(d, i) { d.classList.toggle('active', i === idx); });
 }
+// Init all PPT containers on load (retry if hidden)
+(function retryInit() {
+  var containers = document.querySelectorAll('.ppt-container');
+  containers.forEach(function(c) { initPPT(c); });
+  // Retry after a short delay for panels that expand
+  var anyUninit = false;
+  containers.forEach(function(c) { if (!c._inited) anyUninit = true; });
+  if (anyUninit) setTimeout(retryInit, 500);
+})();
+// Also init when any who-panel is opened
+document.querySelectorAll('.who-panel').forEach(function(p) {
+  p.addEventListener('click', function() {
+    setTimeout(function() {
+      p.querySelectorAll('.ppt-container').forEach(function(c) { initPPT(c); });
+    }, 400);
+  });
+});
 updateStats();
 </script>
 
