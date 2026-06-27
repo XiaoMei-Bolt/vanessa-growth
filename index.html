@@ -842,6 +842,13 @@
       <p class="section-label">我来自哪里</p>
       <h2 class="section-heading">温暖瞬间</h2>
       <p class="section-desc">一家人在一起的每个平凡时刻，都是最珍贵的记忆。</p>
+      <div class="who-panel" style="background:#fff;box-shadow:0 2px 8px rgba(0,0,0,0.06);" onclick="this.classList.toggle('open')">
+        <div class="who-panel-header">
+          <h3 style="color:#1d1d1f;font-size:17px;">📂 展开内容</h3>
+          <div class="who-panel-arrow" style="color:rgba(0,0,0,0.3);">▼</div>
+        </div>
+        <div class="who-panel-body">
+          <div class="who-panel-body-inner" style="border-top-color:rgba(0,0,0,0.06);">
       <div class="card-grid">
         <div class="card">
           <div class="card-image">🌿</div>
@@ -872,6 +879,9 @@
           </div>
         </div>
       </div>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -881,6 +891,14 @@
       <p class="section-label">读书笔记</p>
       <h2 class="section-heading">2026 年暑假阅读计划</h2>
       <p class="section-desc">这个夏天，和果果一起读书。妈妈有妈妈的书单，果果有果果的书单——各自探索，彼此分享。</p>
+
+      <div class="who-panel" onclick="this.classList.toggle('open')">
+        <div class="who-panel-header">
+          <h3 style="font-size:17px;">📂 展开书单</h3>
+          <div class="who-panel-arrow">▼</div>
+        </div>
+        <div class="who-panel-body">
+          <div class="who-panel-body-inner">
 
       <div class="reading-page">
         <div class="reading-columns">
@@ -1040,6 +1058,9 @@
         <div class="reflection-area">
           <h3>✏️ 读后感</h3>
           <textarea id="reflection" placeholder="读完一本书，写下你的想法……可以是果果说的，也可以是妈妈记的。"></textarea>
+        </div>
+      </div>
+          </div>
         </div>
       </div>
     </div>
