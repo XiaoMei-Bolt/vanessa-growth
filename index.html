@@ -261,6 +261,56 @@
       .card-grid { grid-template-columns: 1fr; }
     }
 
+    /* ===== PPT Slide System ===== */
+    .ppt-container { position:relative; }
+    .ppt-viewport { overflow:hidden; border-radius:12px; }
+    .ppt-track { display:flex; transition:transform 0.4s cubic-bezier(0.25,0.46,0.45,0.94); }
+    .ppt-slide { min-width:100%; }
+    .ppt-inner { padding:20px 24px 16px; min-height:340px; position:relative; }
+    .ppt-cover { text-align:center; display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:380px; background:linear-gradient(180deg,rgba(255,255,255,0) 0%,rgba(76,175,80,0.08) 100%); }
+    .ppt-emoji-hero { font-size:64px; margin-bottom:8px; animation:pptBounce 0.6s ease-out; }
+    @keyframes pptBounce { 0%{transform:scale(0.3);opacity:0} 60%{transform:scale(1.1)} 100%{transform:scale(1);opacity:1} }
+    .ppt-title-main { font-size:28px; font-weight:800; color:#2e7d32; margin:0; letter-spacing:0; }
+    .ppt-subtitle-big { font-size:15px; color:#558b2f; margin:4px 0 12px; }
+    .ppt-cover-line { width:60px; height:3px; background:#4caf50; border-radius:2px; margin:0 auto 14px; }
+    .ppt-cover-info { display:flex; gap:16px; flex-wrap:wrap; justify-content:center; margin-bottom:10px; }
+    .ppt-info-item { font-size:13px; color:#555; background:rgba(76,175,80,0.08); padding:4px 12px; border-radius:20px; }
+    .ppt-cover-stars { font-size:13px; color:#ff9800; font-weight:600; letter-spacing:1px; }
+    .ppt-num { position:absolute; top:12px; right:16px; font-size:32px; font-weight:800; color:rgba(76,175,80,0.15); }
+    .ppt-title { font-size:20px; font-weight:700; color:#2e7d32; margin:0 0 12px; }
+    .ppt-subtitle { font-size:13px; color:#666; margin:-8px 0 14px; font-weight:500; }
+    .ppt-card { background:#fff; border-radius:10px; padding:10px 14px; font-size:13px; color:#333; box-shadow:0 1px 4px rgba(0,0,0,0.06); border-left:3px solid #4caf50; }
+    .ppt-card-wide { margin-bottom:8px; }
+    .ppt-card-warn { border-left-color:#ff9800; background:#fff8e1; }
+    .ppt-grid-2col { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:8px; }
+    .ppt-timeline { display:flex; flex-direction:column; gap:6px; }
+    .ppt-tl-item { display:flex; align-items:center; gap:10px; font-size:13px; color:#444; padding:6px 10px; background:rgba(76,175,80,0.04); border-radius:8px; }
+    .ppt-tl-time { background:#4caf50; color:#fff; font-size:11px; font-weight:700; padding:2px 8px; border-radius:10px; min-width:56px; text-align:center; }
+    .ppt-equip-row { display:flex; align-items:center; justify-content:center; gap:24px; margin:12px 0; }
+    .ppt-equip-item { text-align:center; font-size:13px; color:#333; background:#fff; border-radius:12px; padding:12px 20px; box-shadow:0 2px 8px rgba(0,0,0,0.06); }
+    .ppt-arrow-big { font-size:24px; color:#4caf50; font-weight:700; }
+    .ppt-flow { display:flex; align-items:center; gap:6px; flex-wrap:wrap; justify-content:center; margin:12px 0; font-size:12px; }
+    .ppt-flow-step { background:rgba(76,175,80,0.1); padding:5px 10px; border-radius:16px; color:#2e7d32; font-weight:600; }
+    .ppt-flow span { color:#aaa; }
+    .ppt-pipeline { display:flex; align-items:center; justify-content:center; gap:0; margin:16px 0; flex-wrap:wrap; }
+    .ppt-pipe-step { padding:12px 16px; border-radius:12px; font-size:13px; font-weight:600; color:#333; text-align:center; min-width:100px; }
+    .ppt-pipe-arrow { font-size:18px; color:#aaa; margin:0 4px; }
+    .ppt-note { text-align:center; font-size:12px; color:#888; margin-top:8px; }
+    .ppt-nav { display:flex; align-items:center; justify-content:center; gap:16px; padding:12px 0 4px; }
+    .ppt-btn { background:#4caf50; color:#fff; border:none; width:36px; height:36px; border-radius:50%; font-size:16px; cursor:pointer; transition:background 0.2s; display:flex; align-items:center; justify-content:center; box-shadow:0 2px 6px rgba(0,0,0,0.15); }
+    .ppt-btn:hover { background:#388e3c; }
+    .ppt-dots { display:flex; gap:6px; }
+    .ppt-dot { width:8px; height:8px; border-radius:50%; background:#ccc; transition:all 0.3s; cursor:pointer; }
+    .ppt-dot.active { background:#4caf50; width:24px; border-radius:4px; }
+
+    @media (max-width:600px) {
+      .ppt-grid-2col { grid-template-columns:1fr; }
+      .ppt-cover-info { flex-direction:column; align-items:center; }
+      .ppt-title-main { font-size:22px; }
+      .ppt-pipeline { flex-direction:column; }
+      .ppt-pipe-arrow { transform:rotate(90deg); }
+    }
+
     /* Reading List */
     .reading-page { text-align: left; max-width: 780px; margin: 0 auto; }
     .reading-columns { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
@@ -495,12 +545,214 @@
             <p class="card-desc">用英文分享阅读的快乐，连接社区里的小读者们。</p>
           </div>
         </div>
-        <div class="card">
-          <div class="card-image">⭐</div>
-          <div class="card-info">
-            <span class="tag tag-volunteer">支教</span>
-            <h3 class="card-title">星星之火支教</h3>
-            <p class="card-desc">暑期支教项目——点点星光，也能照亮远方。</p>
+        <div class="card" style="grid-column:1/-1;background:linear-gradient(135deg,#e8f5e9 0%,#e3f2fd 50%,#fff8e1 100%);border-radius:16px;padding:0;overflow:visible;box-shadow:0 4px 24px rgba(0,0,0,0.08);">
+          <div class="card-info" style="padding:0;">
+
+            <!-- PPT Slide System -->
+            <div class="ppt-container" id="ppt-teach">
+
+              <!-- Slide wrapper -->
+              <div class="ppt-viewport">
+                <div class="ppt-track" id="pptTrack">
+
+                  <!-- Slide 1: Cover -->
+                  <div class="ppt-slide">
+                    <div class="ppt-inner ppt-cover">
+                      <div class="ppt-emoji-hero">🥍</div>
+                      <h2 class="ppt-title-main">趣味运动课</h2>
+                      <p class="ppt-subtitle-big">SCOOP Ball 七天支教教学方案</p>
+                      <div class="ppt-cover-line"></div>
+                      <div class="ppt-cover-info">
+                        <div class="ppt-info-item">👧 授课对象：小学三年级</div>
+                        <div class="ppt-info-item">⏱ 单课时长：40 分钟</div>
+                        <div class="ppt-info-item">👩‍🏫 汇报人：唐子沐（Vanessa）</div>
+                      </div>
+                      <div class="ppt-cover-stars">⭐ 湖南 · 星星之火支教 ⭐</div>
+                    </div>
+                  </div>
+
+                  <!-- Slide 2: Overview -->
+                  <div class="ppt-slide">
+                    <div class="ppt-inner">
+                      <span class="ppt-num">02</span>
+                      <h3 class="ppt-title">📋 课程基础概况</h3>
+                      <div class="ppt-grid-2col">
+                        <div class="ppt-card"><strong>授课项目</strong><br>SCOOP Ball 趣味运动课</div>
+                        <div class="ppt-card"><strong>授课对象</strong><br>小学三年级学生</div>
+                        <div class="ppt-card"><strong>单节课时长</strong><br>40 分钟</div>
+                        <div class="ppt-card"><strong>授课周期</strong><br>连续 7 天课程</div>
+                      </div>
+                      <div class="ppt-card ppt-card-wide"><strong>🎯 课程设计思路</strong><br>以学生自主探索为主，难度循序渐进，从单人练习→双人配合→团队对战→赛事展演。</div>
+                      <div class="ppt-card ppt-card-wide"><strong>🏆 课程目标</strong><br>① 熟悉 SCOOP Ball 器材，自主开发玩法 ② 掌握抛接基础技能 ③ 培养团队协作，完成成果展示</div>
+                    </div>
+                  </div>
+
+                  <!-- Slide 3: Equipment -->
+                  <div class="ppt-slide">
+                    <div class="ppt-inner">
+                      <span class="ppt-num">03</span>
+                      <h3 class="ppt-title">🥍 器材介绍</h3>
+                      <div class="ppt-equip-row">
+                        <div class="ppt-equip-item">🥍<br><strong>SCOOP Ball</strong><br>长柄接球勺 + 轻质软球</div>
+                        <div class="ppt-arrow-big">→</div>
+                        <div class="ppt-equip-item">🪣<br><strong>得分桶</strong><br>赛事加分道具</div>
+                      </div>
+                      <div class="ppt-flow">
+                        <div class="ppt-flow-step">🔍 认识器材</div><span>→</span>
+                        <div class="ppt-flow-step">🎮 自由探索</div><span>→</span>
+                        <div class="ppt-flow-step">👥 双人配合</div><span>→</span>
+                        <div class="ppt-flow-step">⚔️ 3v3 对战</div><span>→</span>
+                        <div class="ppt-flow-step">🏆 赛事展演</div>
+                      </div>
+                      <p class="ppt-note">✨ 课程最终成果：学生分组开展完整 SCOOP Ball 对抗展演</p>
+                    </div>
+                  </div>
+
+                  <!-- Slide 4: Daily Flow -->
+                  <div class="ppt-slide">
+                    <div class="ppt-inner">
+                      <span class="ppt-num">04</span>
+                      <h3 class="ppt-title">📅 每日通用课堂流程</h3>
+                      <p class="ppt-subtitle">所有课程统一四段式结构</p>
+                      <div class="ppt-pipeline">
+                        <div class="ppt-pipe-step" style="background:#FFCDD2;">🔥<br>热身活动</div>
+                        <div class="ppt-pipe-arrow">→</div>
+                        <div class="ppt-pipe-step" style="background:#C8E6C9;">📖<br>技能讲解<br>/自主练习</div>
+                        <div class="ppt-pipe-arrow">→</div>
+                        <div class="ppt-pipe-step" style="background:#BBDEFB;">⚔️<br>游戏或<br>实战对抗</div>
+                        <div class="ppt-pipe-arrow">→</div>
+                        <div class="ppt-pipe-step" style="background:#FFF9C4;">💬<br>课堂小结</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Slide 5: Day 1 -->
+                  <div class="ppt-slide">
+                    <div class="ppt-inner">
+                      <span class="ppt-num">05</span>
+                      <h3 class="ppt-title">📝 第一天课程安排</h3>
+                      <p class="ppt-subtitle">热身：Shark in the Middle 🦈</p>
+                      <div class="ppt-timeline">
+                        <div class="ppt-tl-item"><span class="ppt-tl-time">10 min</span> 🔥 热身游戏 Shark in the Middle</div>
+                        <div class="ppt-tl-item"><span class="ppt-tl-time">5 min</span> 🥍 讲解器材基础用法与安全规范</div>
+                        <div class="ppt-tl-item"><span class="ppt-tl-time">10 min</span> 🎮 学生单人自由玩耍，熟悉器材手感</div>
+                        <div class="ppt-tl-item"><span class="ppt-tl-time">5 min</span> 🏆 讲解课程最终展示成果</div>
+                        <div class="ppt-tl-item"><span class="ppt-tl-time">10 min</span> 🆓 灵活安排：自由探索抛接玩法</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Slide 6: Day 2 -->
+                  <div class="ppt-slide">
+                    <div class="ppt-inner">
+                      <span class="ppt-num">06</span>
+                      <h3 class="ppt-title">📝 第二天课程安排</h3>
+                      <p class="ppt-subtitle">热身：双人传接球 🤝</p>
+                      <div class="ppt-timeline">
+                        <div class="ppt-tl-item"><span class="ppt-tl-time">10 min</span> 🔥 双人传球热身活动</div>
+                        <div class="ppt-tl-item"><span class="ppt-tl-time">10 min</span> 👥 两人一组 SCOOP Ball 互抛练习</div>
+                        <div class="ppt-tl-item"><span class="ppt-tl-time">20 min</span> ⚔️ 3v3 小型分组对战游戏</div>
+                      </div>
+                      <div class="ppt-card ppt-card-wide" style="margin-top:12px;"><strong>📐 3v3 计分规则</strong><br>接住 +1 · 对方未接住 +1 · 出界对方 +1 · 投入得分桶 <strong>+2</strong> · 先到 <strong>20分</strong> 获胜</div>
+                    </div>
+                  </div>
+
+                  <!-- Slide 7: Day 3 -->
+                  <div class="ppt-slide">
+                    <div class="ppt-inner">
+                      <span class="ppt-num">07</span>
+                      <h3 class="ppt-title">📝 第三天课程安排</h3>
+                      <div class="ppt-timeline">
+                        <div class="ppt-tl-item"><span class="ppt-tl-time">10 min</span> 🔄 复习单人、双人抛接技巧</div>
+                        <div class="ppt-tl-item"><span class="ppt-tl-time">20 min</span> ⚔️ 3v3 分组对战热身游戏（6人/组，自主分队命名）</div>
+                        <div class="ppt-tl-item"><span class="ppt-tl-time">10 min</span> 💬 自由巩固练习 + 小结</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Slide 8: Day 4 -->
+                  <div class="ppt-slide">
+                    <div class="ppt-inner">
+                      <span class="ppt-num">08</span>
+                      <h3 class="ppt-title">📝 第四天课程安排</h3>
+                      <p class="ppt-subtitle">核心：全天实战对抗</p>
+                      <div class="ppt-grid-2col">
+                        <div class="ppt-card">🔥 简短常规热身</div>
+                        <div class="ppt-card">⚔️ 划分两队，完整 SCOOP Ball 对战</div>
+                        <div class="ppt-card">⏸ 中场暂停复盘<br>调整站位、传球方式</div>
+                        <div class="ppt-card">🔄 轮换队员<br>持续实战训练</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Slide 9: Day 5 -->
+                  <div class="ppt-slide">
+                    <div class="ppt-inner">
+                      <span class="ppt-num">09</span>
+                      <h3 class="ppt-title">📝 第五天课程安排</h3>
+                      <p class="ppt-subtitle">核心：持续实战，提升默契</p>
+                      <div class="ppt-grid-2col">
+                        <div class="ppt-card">🔥 简易基础热身</div>
+                        <div class="ppt-card">🔄 轮换队伍循环对抗赛</div>
+                        <div class="ppt-card">💡 小组交流<br>优化传接配合技巧</div>
+                        <div class="ppt-card">🔀 调整队员分组<br>增强整体协作</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Slide 10: Day 6 -->
+                  <div class="ppt-slide">
+                    <div class="ppt-inner">
+                      <span class="ppt-num">10</span>
+                      <h3 class="ppt-title">📝 第六天课程安排</h3>
+                      <p class="ppt-subtitle">核心：完整模拟成果展示赛事</p>
+                      <div class="ppt-grid-2col">
+                        <div class="ppt-card">🔥 基础热身活动</div>
+                        <div class="ppt-card">🏆 严格按展演标准流程竞技</div>
+                        <div class="ppt-card">🎯 全程复刻成果展流程<br>熟悉比赛节奏</div>
+                        <div class="ppt-card">📋 梳理安全、判罚<br>团队配合等事项</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Slide 11: Safety -->
+                  <div class="ppt-slide">
+                    <div class="ppt-inner">
+                      <span class="ppt-num">11</span>
+                      <h3 class="ppt-title">🛡 课堂安全与管理要点</h3>
+                      <div class="ppt-grid-2col">
+                        <div class="ppt-card ppt-card-warn">🚫 <strong>器材使用</strong><br>禁止挥舞接球勺，不对脸部抛球，轻拿轻放</div>
+                        <div class="ppt-card ppt-card-warn">📍 <strong>场地管理</strong><br>划分固定活动区域，有序跑动，避免追逐冲撞</div>
+                        <div class="ppt-card ppt-card-warn">📦 <strong>器材收纳</strong><br>每节课后统一清点、整理器材与得分桶</div>
+                        <div class="ppt-card ppt-card-warn">🆘 <strong>应急处理</strong><br>磕碰不适立即停止运动，及时告知老师</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Slide 12: Summary -->
+                  <div class="ppt-slide">
+                    <div class="ppt-inner ppt-cover" style="padding:24px 32px;">
+                      <span class="ppt-num">12</span>
+                      <h3 class="ppt-title">🌟 总结与致谢</h3>
+                      <div class="ppt-card ppt-card-wide"><strong>💡 课程设计亮点</strong><br>阶梯式难度 · 精准课时分配 · 自主探索为主 · 计分对战激励 · 成果可视化</div>
+                      <div class="ppt-card ppt-card-wide"><strong>🎯 预期教学效果</strong><br>三年级学生熟练掌握抛接技能，树立团队合作意识，顺利完成成果展演</div>
+                      <div class="ppt-cover-stars" style="margin-top:10px;">✨ 点点星光，也能照亮远方 ✨</div>
+                      <p style="text-align:center;color:#666;font-size:12px;margin-top:8px;">汇报人：唐子沐（Vanessa）· 2026 暑假 · 湖南星星之火支教</p>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
+              <!-- Navigation -->
+              <div class="ppt-nav">
+                <button class="ppt-btn" onclick="goSlide('ppt-teach',-1)">◀</button>
+                <div class="ppt-dots" id="pptDots"></div>
+                <button class="ppt-btn" onclick="goSlide('ppt-teach',1)">▶</button>
+              </div>
+
+            </div>
+
           </div>
         </div>
       </div>
@@ -802,6 +1054,41 @@ function updateStats() {
     var el = document.getElementById('stats-' + col);
     if (el) el.textContent = '已读完 ' + done + '/' + total + ' 本' + (done === total ? ' 🎉' : '');
   });
+}
+// ===== PPT Slide System =====
+(function() {
+  var containers = document.querySelectorAll('.ppt-container');
+  containers.forEach(function(c) {
+    var track = c.querySelector('.ppt-track');
+    var dots  = c.querySelector('.ppt-dots');
+    var slides = track.querySelectorAll('.ppt-slide');
+    var total  = slides.length;
+    var index  = 0;
+    for (var i = 0; i < total; i++) {
+      var d = document.createElement('span');
+      d.className = 'ppt-dot' + (i === 0 ? ' active' : '');
+      d.setAttribute('data-i', i);
+      d.onclick = (function(j) { return function() { goSlide(c.id, j - index); }; })(i);
+      dots.appendChild(d);
+    }
+    c._idx = 0; c._track = track;
+    c._dots = dots.querySelectorAll('.ppt-dot'); c._total = total;
+    var startX = 0;
+    track.addEventListener('touchstart', function(e) { startX = e.touches[0].clientX; });
+    track.addEventListener('touchend', function(e) {
+      var diff = startX - e.changedTouches[0].clientX;
+      if (Math.abs(diff) > 50) goSlide(c.id, diff > 0 ? 1 : -1);
+    });
+  });
+})();
+function goSlide(containerId, delta) {
+  var c = document.getElementById(containerId);
+  if (!c || !c._track) return;
+  var idx = c._idx + delta;
+  if (idx < 0 || idx >= c._total) return;
+  c._idx = idx;
+  c._track.style.transform = 'translateX(-' + (idx * 100) + '%)';
+  c._dots.forEach(function(d, i) { d.classList.toggle('active', i === idx); });
 }
 updateStats();
 </script>
