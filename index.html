@@ -762,9 +762,9 @@
                       </div>
                     </div>
                     <div class="ppt-nav">
-                      <button class="ppt-btn" onclick="goSlide('ppt-teach2',-1)">◀</button>
-                      <div class="ppt-dots" id="pptDots2"></div>
-                      <button class="ppt-btn" onclick="goSlide('ppt-teach2',1)">▶</button>
+                      <button class="ppt-btn" onclick="event.stopPropagation();goSlide('ppt-teach2',-1)">◀</button>
+                      <div class="ppt-dots" id="pptDots2" onclick="event.stopPropagation()"></div>
+                      <button class="ppt-btn" onclick="event.stopPropagation();goSlide('ppt-teach2',1)">▶</button>
                     </div>
                   </div>
 
