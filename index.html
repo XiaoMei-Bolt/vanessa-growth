@@ -420,7 +420,6 @@
       border: 1px solid rgba(255,255,255,0.08);
       background: #1a1a1d;
     }
-    .map-box .leaflet-tile { filter: invert(0.92) hue-rotate(180deg) saturate(0.4) brightness(0.9); }
     .map-box .leaflet-control-zoom a {
       background: rgba(30,30,35,0.9); color: #ccc;
       border-color: rgba(255,255,255,0.1);
@@ -1031,9 +1030,10 @@ updateStats();
 // ===== Footprint Maps =====
 (function(){
   // ---- Tile layers ----
-  var darkTiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; <a href="https://openstreetmap.org/">OpenStreetMap</a>',
-    maxZoom: 19
+  var darkTiles = L.tileLayer('https://webrd0{s}.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=1&style=8&x={x}&y={y}&z={z}', {
+    subdomains: '1234',
+    attribution: '&copy; <a href="https://www.amap.com/">高德地图</a>',
+    maxZoom: 18
   });
 
   // ---- World Map ----
