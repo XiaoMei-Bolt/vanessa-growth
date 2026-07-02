@@ -403,7 +403,52 @@
     .reading-stats {
       margin-top: 16px; font-size: 13px; color: rgba(255,255,255,0.4);
     }
+
+    /* ===== Footprint Maps ===== */
+    .footprint-section { background: var(--black); }
+    .map-row {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 24px;
+      margin-top: 16px;
+    }
+    .map-col { text-align: left; }
+    .map-col h3 {
+      font-size: 17px; font-weight: 600; color: rgba(255,255,255,0.64);
+      margin-bottom: 10px; padding-left: 4px;
+    }
+    .map-box {
+      width: 100%; height: 420px; border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: #1a1a1d;
+    }
+    .add-marker-row {
+      display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap;
+    }
+    .add-marker-row input {
+      flex: 1; min-width: 120px;
+      padding: 8px 12px; border-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.04); color: var(--white);
+      font-family: inherit; font-size: 13px; outline: none;
+    }
+    .add-marker-row input:focus { border-color: rgba(255,255,255,0.3); }
+    .add-marker-row button {
+      padding: 8px 18px; border-radius: 8px; border: none;
+      background: var(--apple-blue); color: var(--white);
+      font-family: inherit; font-size: 13px; font-weight: 500;
+      cursor: pointer; transition: background 0.2s;
+    }
+    .add-marker-row button:hover { background: #0077ed; }
+    .map-hint {
+      font-size: 11px; color: rgba(255,255,255,0.28);
+      margin-top: 6px; padding-left: 4px;
+    }
+    @media (max-width: 700px) {
+      .map-row { grid-template-columns: 1fr; }
+      .map-box { height: 320px; }
+    }
   </style>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 </head>
 <body>
 
@@ -415,6 +460,7 @@
         <li><a href="#annual">年度</a></li>
         <li><a href="#whoami">我是谁</a></li>
         <li><a href="#family">我来自哪里</a></li>
+        <li><a href="#footprints">我的足迹</a></li>
         <li><a href="#reading">读书</a></li>
       </ul>
     </div>
@@ -666,6 +712,39 @@
         </div>
       </div>
           </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footprints -->
+  <section class="section footprint-section" id="footprints">
+    <div class="section-inner">
+      <p class="section-label" style="color:rgba(255,255,255,0.48);">我的足迹</p>
+      <h2 class="section-heading">用脚步丈量世界</h2>
+      <p class="section-desc" style="color:rgba(255,255,255,0.64);">每一座城市、每一个国家——记录 Vanessa 看过和将要看的世界。</p>
+
+      <div class="map-row">
+        <!-- World Map -->
+        <div class="map-col">
+          <h3>🌍 世界</h3>
+          <div class="map-box" id="worldMap"></div>
+          <div class="add-marker-row">
+            <input type="text" id="worldPlaceInput" placeholder="输入国家或城市…">
+            <button onclick="addMarkerToMap('world')">+ 标记</button>
+          </div>
+          <p class="map-hint">点击地图选位置，或输入地名搜索后标记</p>
+        </div>
+
+        <!-- China Map -->
+        <div class="map-col">
+          <h3>🇨🇳 中国</h3>
+          <div class="map-box" id="chinaMap"></div>
+          <div class="add-marker-row">
+            <input type="text" id="chinaPlaceInput" placeholder="输入省份或城市…">
+            <button onclick="addMarkerToMap('china')">+ 标记</button>
+          </div>
+          <p class="map-hint">点击地图选位置，或输入地名搜索后标记</p>
         </div>
       </div>
     </div>
@@ -941,6 +1020,162 @@ function goSlide(containerId, delta) {
   c._idx = 0;
 })();
 updateStats();
+</script>
+
+<script>
+// ===== Footprint Maps =====
+(function(){
+  // ---- Tile layers ----
+  var darkTiles = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+    attribution: '&copy; <a href="https://carto.com/">CARTO</a>',
+    maxZoom: 19
+  });
+
+  // ---- World Map ----
+  var worldMap = L.map('worldMap', {
+    center: [25, 10], zoom: 2,
+    layers: [darkTiles],
+    zoomControl: true,
+    scrollWheelZoom: true
+  });
+
+  var worldPlaces = [
+    { name: '中国',       lat: 35.86,  lng: 104.20 },
+    { name: '美国',       lat: 37.09,  lng: -95.71 },
+    { name: '新西兰',     lat: -40.90, lng: 174.89 },
+    { name: '德国',       lat: 51.17,  lng: 10.45 },
+    { name: '法国',       lat: 46.60,  lng: 1.89 },
+    { name: '希腊',       lat: 39.07,  lng: 21.82 },
+    { name: '瑞典',       lat: 60.13,  lng: 18.64 },
+  ];
+
+  // ---- China Map ----
+  var chinaMap = L.map('chinaMap', {
+    center: [35.5, 105], zoom: 4,
+    layers: [darkTiles],
+    zoomControl: true,
+    scrollWheelZoom: true
+  });
+
+  var chinaPlaces = [
+    { name: '云南', lat: 25.04,  lng: 102.71, city: '昆明' },
+    { name: '新疆', lat: 43.83,  lng: 87.62,  city: '乌鲁木齐' },
+    { name: '四川', lat: 30.57,  lng: 104.07, city: '成都' },
+    { name: '内蒙古', lat: 40.84, lng: 111.75, city: '呼和浩特' },
+    { name: '黑龙江', lat: 45.80, lng: 126.53, city: '哈尔滨' },
+    { name: '陕西', lat: 34.26,  lng: 108.94, city: '西安' },
+    { name: '广东', lat: 23.13,  lng: 113.26, city: '广州' },
+    { name: '香港', lat: 22.32,  lng: 114.17  },
+    { name: '澳门', lat: 22.20,  lng: 113.55  },
+    { name: '海南', lat: 20.02,  lng: 110.35, city: '海口' },
+    { name: '湖南', lat: 28.23,  lng: 112.94, city: '长沙' },
+    { name: '贵州', lat: 26.65,  lng: 106.63, city: '贵阳' },
+    { name: '福建', lat: 26.07,  lng: 119.30, city: '福州' },
+    { name: '上海', lat: 31.23,  lng: 121.47  },
+    { name: '江苏', lat: 32.06,  lng: 118.80, city: '南京' },
+    { name: '北京', lat: 39.90,  lng: 116.41  },
+  ];
+
+  // ---- Custom pin icon ----
+  function pinIcon(color) {
+    return L.divIcon({
+      className: '',
+      html: '<svg width="28" height="36" viewBox="0 0 28 36"><path d="M14 0C6.27 0 0 6.27 0 14c0 10.5 14 22 14 22s14-11.5 14-22C28 6.27 21.73 0 14 0z" fill="'+color+'" stroke="#fff" stroke-width="1.5"/><circle cx="14" cy="12" r="5" fill="#fff" opacity="0.9"/></svg>',
+      iconSize: [28, 36],
+      iconAnchor: [14, 36],
+      popupAnchor: [0, -38]
+    });
+  }
+
+  var worldIcon = pinIcon('#0071e3');
+  var chinaIcon = pinIcon('#ff6b35');
+  var userIcon  = pinIcon('#34c759');
+
+  // ---- Place markers ----
+  function placeMarkers(map, places, icon) {
+    places.forEach(function(p){
+      var label = p.city ? p.name + ' · ' + p.city : p.name;
+      L.marker([p.lat, p.lng], {icon: icon}).addTo(map).bindPopup(label);
+    });
+  }
+
+  placeMarkers(worldMap, worldPlaces, worldIcon);
+  placeMarkers(chinaMap, chinaPlaces, chinaIcon);
+
+  // ---- Load user-added markers from localStorage ----
+  function loadUserMarkers(key, map, icon) {
+    try {
+      var data = JSON.parse(localStorage.getItem(key) || '[]');
+      data.forEach(function(p){
+        L.marker([p.lat, p.lng], {icon: icon}).addTo(map).bindPopup(p.name);
+      });
+    } catch(e){}
+  }
+
+  loadUserMarkers('footprint-world', worldMap, userIcon);
+  loadUserMarkers('footprint-china', chinaMap, userIcon);
+
+  // ---- Add marker by click ----
+  var pendingMap = null;
+  worldMap.on('click', function(e){ pendingMap = 'world'; });
+  chinaMap.on('click', function(e){ pendingMap = 'china'; });
+
+  // ---- Add marker by search ----
+  window.addMarkerToMap = function(which) {
+    var inputId = which === 'world' ? 'worldPlaceInput' : 'chinaPlaceInput';
+    var map = which === 'world' ? worldMap : chinaMap;
+    var storeKey = 'footprint-' + which;
+    var name = document.getElementById(inputId).value.trim();
+    if (!name) { alert('请输入地名'); return; }
+
+    fetch('https://nominatim.openstreetmap.org/search?format=json&q=' + encodeURIComponent(name) + '&limit=1')
+      .then(function(r){ return r.json(); })
+      .then(function(data){
+        if (!data.length) { alert('未找到「' + name + '」，请尝试更具体的地名'); return; }
+        var d = data[0];
+        var lat = parseFloat(d.lat), lng = parseFloat(d.lon);
+        map.setView([lat, lng], 6);
+        L.marker([lat, lng], {icon: userIcon}).addTo(map).bindPopup(name);
+        // Save to localStorage
+        try {
+          var saved = JSON.parse(localStorage.getItem(storeKey) || '[]');
+          saved.push({name: name, lat: lat, lng: lng});
+          localStorage.setItem(storeKey, JSON.stringify(saved));
+        } catch(e){}
+        document.getElementById(inputId).value = '';
+      })
+      .catch(function(){ alert('搜索失败，请重试'); });
+  };
+
+  // ---- Click on map to add marker at that position ----
+  function setupClickToAdd(map, storeKey) {
+    map.on('dblclick', function(e){
+      var name = prompt('为此地点命名：');
+      if (!name) return;
+      L.marker(e.latlng, {icon: userIcon}).addTo(map).bindPopup(name);
+      try {
+        var saved = JSON.parse(localStorage.getItem(storeKey) || '[]');
+        saved.push({name: name, lat: e.latlng.lat, lng: e.latlng.lng});
+        localStorage.setItem(storeKey, JSON.stringify(saved));
+      } catch(err){}
+    });
+  }
+
+  setupClickToAdd(worldMap, 'footprint-world');
+  setupClickToAdd(chinaMap, 'footprint-china');
+
+  // ---- Trigger resize on section visibility ----
+  var observer = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if (entry.isIntersecting) {
+        worldMap.invalidateSize();
+        chinaMap.invalidateSize();
+      }
+    });
+  }, { threshold: 0.1 });
+  observer.observe(document.getElementById('footprints'));
+
+})();
 </script>
 
 </body>
